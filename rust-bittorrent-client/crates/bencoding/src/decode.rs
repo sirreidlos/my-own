@@ -1,9 +1,8 @@
+use crate::bencode::BencodeType;
 use std::{collections::BTreeMap, str::Utf8Error};
 
-use crate::bencode::BencodeType;
-
 #[derive(Debug)]
-pub struct Decoder<'a> {
+struct Decoder<'a> {
     input: &'a [u8],
     cursor: usize,
 }
@@ -140,6 +139,11 @@ impl<'a> Decoder<'a> {
 
         Ok(BencodeType::Dictionary(res))
     }
+}
+
+pub fn decode<T: AsRef<[u8]>>(input: T) -> Result<BencodeType, DecodeError> {
+    let mut decoder = Decoder::new(input.as_ref());
+    decoder.decode()
 }
 
 #[cfg(test)]

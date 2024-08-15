@@ -65,6 +65,10 @@ impl Encodable for BencodeType {
     }
 }
 
+pub fn encode(input: impl Encodable) -> Vec<u8> {
+    input.encode()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
